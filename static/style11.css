@@ -1,0 +1,117 @@
+body{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(34, 76, 51, 0.81);
+    text-align: center;
+    padding: 0;
+    margin-top: 0;
+}
+.black{
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    transition: 0.5s ease all;
+    transition-delay: 0.2s;
+    z-index: -1;
+    opacity: 0.2;
+}
+.heading{
+    font-family: "Courier New", serif;
+    font-size: 60px;
+    padding: 15px;
+    padding-top: 35px;
+}
+#input:focus{
+    outline: 0;
+}
+.text{
+    font-family: "Courier New", serif;
+    font-size: 40px;
+    padding: 15px;
+}
+#input{
+    padding: 15px;
+    font-size: 20px;
+    border: none;
+    width: 45vw;
+}
+.err{
+    border-bottom: 2px solid #ff3130;
+    color: #ff3130;
+    text-align: center;
+    font-family: "Lucida Console", serif;
+    transition: visibility 0.8s ease-in-out, opacity 0.8s ease-in-out;
+    height: 30px;
+    padding-top: 15px;
+    visibility: hidden;
+    opacity: 0;
+}
+.error .err{
+    visibility: visible;
+    opacity: 1;
+}
+
+#button{
+    font-family: "Lucida Grande", serif;
+    padding: 6px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    background-color: royalblue;
+    color: white;
+    transition: 0.5s ease all;
+    transition-delay: 0.08s;
+}
+#button:focus{
+    border: none;
+    outline: 0;
+}
+
+.buttondiv{
+    padding-top: 5px;
+    text-align: right;
+}
+.field{
+    border-bottom: 1px solid grey;
+}
+.daystring{
+    font-family: "Courier New", serif;
+    font-size: 20px;
+    color: white;
+    padding: 20px;
+    border-bottom: 2px solid black;
+}
+.main{
+    margin-left: auto;
+    margin-right: auto;
+}
+form{
+    transition: 0.3s cubic-bezier(0.175,0.8, 0.3, 1.4) all;
+    transition-delay: 0.2s;
+    background-color: white;
+    border-radius: 10px;
+    margin: auto;
+    width: 50%;
+    padding: 5px;
+}
+#response{
+    visibility: hidden;
+}
+.hello .main form{
+    transform: scale(1.2);
+}
+
+.hello .black{
+    opacity: 0.7;
+}
+li {
+    list-style-type: none;
+    padding: 3px;
+    color: white;
+    font-family: "Courier New", serif;
+
+}
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Birth-date Calculator</title>
+    <link href = "../static/style12.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="error">Please enter your birthday</div>
+    <div class = "main">
+        <div class="black"></div>
+        <div class = "heading">Hello=)</div>
+        <div class = "text">Enter your birth date</div>
+        <form action="/submit" method="get" name = "date">
+            <div class="field">
+                <input type="date" id="input" name = "date">
+            </div>
+            <div class="buttondiv">
+                <input id="button" type="submit" value="Find">
+            </div>
+
+        </form>
+    </div>
+    
+        {% for value in result %}
+        <ul>
+            <li> {{ value }} </li>
+        </ul>
+        {% endfor %}
+
+
+    </div>
+    <script type="text/javascript" src="../static/js9.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" ></div>
+<form action="">
+    <div class="floater contents">
+        <div class = "textfield">
+            <input type="text" placeholder="What's on your mind...">
+        </div>
+        <div class="buttondiv">
+            <input type="submit" value="Add" class = "button" >
+        </div>
+    </div>
+</form>
+
+<div class="bookmarks-list contents"></div>
+
+<script>
+    var body = document.getElementsByTagName("body");
+    var input = document.getElementsByTagName('input');
+    var overlay = document.getElementsByClassName("container");
+
+    input[0].addEventListener('focus', showFloater);
+    input[0].addEventListener('focusout', closeFloater);
+    overlay[0].addEventListener('click', closeFloater);
+
+    function showFloater(){
+        body[0].classList.add('teafloater');
+    }
+    function closeFloater(){
+        body[0].classList.remove('teafloater');
+    }
+
+    //-------------------------------------------------------------------//
+
+    var bookmarkslist = document.getElementsByClassName("bookmarks-list");
+    var bookmarkform = document.getElementsByTagName('form');
+    var text = document.getElementsByTagName('input');
+
+    bookmarkform[0].addEventListener('submit', addBookmark);
+
+    function addBookmark(event){
+        event.preventDefault();
+
+        var value = text[0].value;
+
+        if(value === ""){
+        }
+        else if(value.length <= 10){
+            var newBookmark = document.createElement('a');
+            newBookmark.classList.add("bookmark");
+            newBookmark.innerText = value;
+            newBookmark.href = '#';
+            newBookmark.target = '_blank';
+            bookmarkslist[0].appendChild(newBookmark);
+        }
+        else if(value.length > "10" && value.length <= "20"){
+            var newBookmark = document.createElement('a');
+            newBookmark.classList.add("bookmark");
+            newBookmark.classList.add("firsttype");
+            console.log(newBookmark.className);
+            newBookmark.innerText = value;
+            newBookmark.href = '#';
+            newBookmark.target = '_blank';
+            bookmarkslist[0].appendChild(newBookmark);
+        }
+        else if(value.length > 20){
+            var newBookmark = document.createElement('a');
+            newBookmark.classList.add("bookmark");
+            newBookmark.classList.add("secondtype");
+            newBookmark.innerText = value;
+            newBookmark.href = '#';
+            newBookmark.target = '_blank';
+            bookmarkslist[0].appendChild(newBookmark);
+        }
+
+        bookmarkform[0].reset();
+    }
+
+
+</script>
+</body>
+</html>
+
+
+
+
