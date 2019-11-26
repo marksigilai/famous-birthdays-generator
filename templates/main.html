@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Birth-date Calculator</title>
-    <link href = "../static/style12.css" rel="stylesheet">
+    <link href = "../static/style32.css" rel="stylesheet">
 </head>
 
 <body>
 
-    <div class="error">Please enter your birthday</div>
     <div class = "main">
         <div class="black"></div>
         <div class = "heading">Hello=)</div>
@@ -23,13 +22,20 @@
 
         </form>
     </div>
-    
+    <ol>
         {% for value in result %}
-        <ul>
-            <li> {{ value }} </li>
-        </ul>
+            <li>
+                <b class = "personName">{{ value.get_name()}}</b>
+                <b> born in </b>
+                <b class = "personBday">{{ value.get_birthdate()}}</b>
+                <b>, is a </b>
+                <b class = "personInfo">{{ value.get_information()}}</b>
+                <b> with </b>
+                <b class = "personIndex">{{ value.get_index()}}</b>
+                <b> all time Wikipedia views </b>
+            </li>
         {% endfor %}
-
+    </ol>
 
     </div>
     <script type="text/javascript" src="../static/js9.js"></script>
