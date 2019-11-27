@@ -13,8 +13,7 @@ except ImportError:
     from urllib2 import urlopen
 from flask import Flask, jsonify, make_response, request, abort, render_template, g
 from bs4 import BeautifulSoup
-from people import person
-
+from people import Person
 
 app = Flask(__name__)
 authorized_tokens = {}
@@ -29,7 +28,7 @@ def load_page():
 def static_logs():
     return render_template('main.html')
 
-
+#function triggered when the user posts their birthdate and submits
 @app.route('/submit', methods=['POST', 'GET'])
 def render_date():
     date = request.args.get('date')
@@ -49,11 +48,14 @@ def render_date():
         return render_template('main.html', result = response[::-1], error = err)
     return render_template('main.html', error = err)
 
+
+
+#creates a list of all the famous people sharing the same birthdate
 def createList(famous_list):
+    #lsit for all the people
     all_people = []
-
     for i in range(len(famous_list)):
-
+        #splits the string by either capitals, commas or spaces to
         split_spaces = re.split('   |, |  | ', famous_list[i])
         split_comma = re.split(',', famous_list[i])
         split_capitals = re.findall('[A-Z]\w+', split_comma[0])
@@ -61,9 +63,10 @@ def createList(famous_list):
         birthdate = split_spaces[0]
         try:
             name = split_capitals[0]
+
             for z in range(len(split_capitals) - 1):
                 z += 1
-            name += ' ' + split_capitals[z]
+                name += ' ' + split_capitals[z]
         except Exception:
             name = re.findall('[a-zA-Z].*', split_comma[0])
             print("Special Name is ----------------------------------------------------------------------->  " + name[0])
@@ -73,12 +76,13 @@ def createList(famous_list):
         except Exception:
             information = 'No information on this person'
 
-        all_people.append(person(name,birthdate,information))
+        all_people.append(Person(name,birthdate,information))
         print(all_people[i].get_information())
 
     sorted_list = set_index(all_people)
     return sorted_list
 
+#sets the wikipedia view count for each famous person
 def set_index(list):
     for i in range(len(list)):
         print(list[i].get_name())
@@ -94,6 +98,7 @@ def set_index(list):
             formatted_name += '_' + name[k]
 
         print(formatted_name)
+        #scrape the views per famous person to get the index value
         #url = "https://tools.wmflabs.org/pageviews/?project=en.wikipedia.org&platform=all-access&agent=user&range=all-time&pages=" + formatted_name
         url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/"+ formatted_name + "/monthly/2015070100/2019112000"
         try:
@@ -111,6 +116,7 @@ def set_index(list):
     quicksort(list, 0, len(list) - 1)
     return list
 
+#sorts the list of all famous people based on index value
 def quicksort_partition(list, low, high):
     i = ( low-1 )         # index of smaller element
     pivot = list[high].get_index()    # pivot
@@ -124,6 +130,7 @@ def quicksort_partition(list, low, high):
     list[i+1],list[high] = list[high],list[i+1]
     return i+1
 
+#implementation of quick sort
 def quicksort(list, low, high):
     if low < high:
         # pi is partitioning index, arr[p] is now
@@ -134,22 +141,24 @@ def quicksort(list, low, high):
         quicksort(list, low, pi-1)
         quicksort(list, pi+1, high)
 
+#first scrape that gets all famous people frof wikipedia
 def scrape(date):
     url = "https://en.wikipedia.org/wiki/" + date
     print(url)
     response = requests.get(url).text
     soup = BeautifulSoup(response, "html.parser")
     famouslist = soup.find('div', attrs={'class': 'mw-parser-output'}).find_all('ul')[2]
-    t = famouslist.get_text()
-    tt = t.split("\n")
-    ttt = []
-    for i in range(len(tt)):
-        if re.match('19.*', tt[i]):
-            ttt.append(tt[i])
+    wiki_text = famouslist.get_text()
+    wiki_lines = wiki_text.split("\n")
+    relevant_people = []
+    for i in range(len(wiki_lines)):
+        #selects from the entire list only the people born after 1900
+        if re.match('19.*', wiki_lines[i]) or re.match('2.*', wiki_lines[i]):
+            relevant_people.append(wiki_lines[i])
 
-    return createList(ttt)
+    return createList(relevant_people)
 
-
+#selects the month and the year from the date passed in and formats it
 def make_date(dateNum):
     if not dateNum:
         return
@@ -184,7 +193,6 @@ def not_found(error):
 def not_allowed(error):
     """ Respond to disallowed request """
     return make_response(jsonify({'error': 'Not allowed'}), 405)
-
 
 
 @app.template_filter('dt')
